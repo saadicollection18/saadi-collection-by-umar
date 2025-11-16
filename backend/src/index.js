@@ -1,4 +1,4 @@
-import { app } from "./app.js";
+import app  from "./app.js";
 import connectDb from "./db/db.js";
 import dotenv from "dotenv";
 import { ApiError } from "./utils/apiError.js";
