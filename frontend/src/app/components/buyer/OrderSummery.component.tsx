@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import AddressComponent from "./Address.component";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import buyerAuth from "../../auths/buyerAuth";
 import SingleProductComponent from "./GetProductsByIds.component";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -21,7 +21,6 @@ const ShippingComponent = () => {
   const [orderSummary, setOrderSummary] = useState(orderSummaryStructure)
   const searchParams = useSearchParams()
   const decoded = searchParams.get("query") && JSON.parse(atob(searchParams.get("query") || ""))
-  const [savedAddress, setSavedAddress] = useState<boolean>(false)
 
 
   const router = useRouter()

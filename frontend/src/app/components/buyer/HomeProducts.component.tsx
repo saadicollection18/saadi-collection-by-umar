@@ -162,8 +162,8 @@ const Products = () => {
     <div className="px-6 py-10">
       {loading && <Loading />}
 
-      {searchedProducts && <h1 className="text-gray-600 font-semibold mb-6 text-lg">{searchResult} items found for "{searchedProducts}"</h1>}
-      {categoryName && <h1 className="text-gray-600 font-semibold mb-6 text-lg">Items found in the "{categoryName}" category</h1>}
+      {searchedProducts && <h1 className="text-gray-600 font-semibold mb-6 text-lg">{searchResult} items found for &quot;{searchedProducts}&quot;</h1>}
+      {categoryName && <h1 className="text-gray-600 font-semibold mb-6 text-lg">Items found in the &quot;{categoryName}&quot; category</h1>}
 
       {error ? (
         <ErrorMessage message={error} />
