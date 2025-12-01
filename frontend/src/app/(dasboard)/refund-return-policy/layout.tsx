@@ -7,12 +7,14 @@ export const metadata: Metadata = {
   description:
     "Review the SAADiCcollection.shop refund and return policy to understand how refunds, exchanges, and returns are handled for your orders.",
   keywords: [
-    "refund policy",
-    "return policy",
-    "exchange policy",
-    "order refund",
-    "SAADiCcollection.shop"
-  ],
+  "refund policy",
+  "return policy",
+  "exchange policy",
+  "order refund",
+  "SAADiCcollection.shop",
+  "SaadiCollection"
+],
+
 };
 
 

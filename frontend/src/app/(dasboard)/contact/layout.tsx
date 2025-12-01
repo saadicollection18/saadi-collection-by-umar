@@ -6,13 +6,17 @@ export const metadata:Metadata = {
   title: "Contact Us | SAADiCcollection.shop",
   description:
     "Get in touch with SAADiCcollection.shop support team for help with orders, products, or account-related questions.",
-  keywords: [
-    "contact",
-    "support",
-    "customer service",
-    "help center",
-    "SAADiCcollection.shop"
-  ],
+keywords: [
+  "contact",
+  "support",
+  "customer service",
+  "help center",
+  "SAADiCcollection.shop",
+  "SaadiCollection",
+  "Umar Khitab",
+  "umarkhitab.vercel.app"
+],
+
   
 };
 

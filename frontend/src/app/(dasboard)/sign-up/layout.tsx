@@ -6,7 +6,24 @@ import Head from "next/head";
 export const metadata: Metadata = {
   title: "Sign Up | SAADiCcollection.shop",
   description: "Create your account to start selling or shopping on SAADiCcollection.shop. Join now to manage products, track orders, and explore deals.",
-  keywords: ["sign up", "register", "create account", "seller registration", "buyer registration", "SAADiCcollection.shop"],
+  keywords: [
+  "saadicollection sign up",
+  "saadicollection register",
+  "saadicollection create account",
+  "saadicollection seller registration",
+  "saadicollection buyer registration",
+  "saadicollection shop register",
+  "saadicollection account setup",
+  "register saadicollection shop",
+  "create saadicollection account",
+  "online store registration saadicollection",
+  "ecommerce account registration",
+  "new user saadicollection",
+  "seller panel registration saadicollection",
+  "customer account register saadicollection",
+  "SAADiCcollection.shop"
+]
+
 };
 
 

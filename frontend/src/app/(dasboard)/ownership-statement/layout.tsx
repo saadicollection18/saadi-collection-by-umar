@@ -6,13 +6,17 @@ export const metadata: Metadata = {
   title: "Ownership Statement | SAADiCcollection.shop",
   description:
     "Learn about the ownership and rights of SAADiCcollection.shop, including trademarks, content usage, and intellectual property information.",
-  keywords: [
-    "ownership statement",
-    "intellectual property",
-    "content rights",
-    "SAADiCcollection.shop",
-    "legal information"
-  ],
+ keywords: [
+  "privacy policy",
+  "data protection",
+  "user information",
+  "security",
+  "SAADiCcollection.shop",
+  "SaadiCollection",
+  "Umar Khitab",
+  "umarkhitab.vercel.app"
+],
+
 };
 
 

@@ -6,7 +6,16 @@ import Loading from "@/app/components/Loading.component";
 export const metadata: Metadata = {
   title: "Seller Dashboard | SAADiCcollection.shop",
   description: "Manage your products, track orders, and monitor performance. Seller dashboard for SAADiCcollection.shop merchants.",
-  keywords: ["seller dashboard", "product management", "order tracking", "SAADiCcollection.shop"],
+keywords: [
+  "seller dashboard",
+  "product management",
+  "order tracking",
+  "SAADiCcollection.shop",
+  "SaadiCollection",
+  "Umar Khitab",
+  "umarkhitab.vercel.app"
+],
+
 };
 
 export default function SellerLayout({

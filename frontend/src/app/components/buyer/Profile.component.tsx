@@ -5,6 +5,7 @@ import UserProfileForm from "./UserProfileForm.component";
 import { UserInterface } from "../../utils/user.interface";
 import AddressComponent from "./Address.component";
 import UserPaymentForm from "./UserPaymentForm.component";
+import { usePathname } from "next/navigation";
 
 
 interface ProfileComponentProps {
@@ -14,6 +15,10 @@ interface ProfileComponentProps {
 const ProfileComponent: React.FC<ProfileComponentProps> = ({ user: initialUser }) => {
     const [user, setUser] = useState(initialUser);
     const [edit, setEdit] = useState(false)
+    const pathName=usePathname()
+    const sellerRoleAuth = ["/seller"].some(route => pathName.startsWith(route));
+
+   
 
     useEffect(() => {
         setUser(initialUser);
@@ -21,7 +26,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ user: initialUser }
 
     return (
         <>
-            <div className=" mx-auto  bg-transparent shadow-xl rounded-xl overflow-hidden relative w-full">
+            <div className=" mx-auto h-screen  bg-transparent shadow-xl rounded-xl overflow-hidden relative w-full">
                 <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
                     <h1 className="text-2xl font-bold text-white">
                         {edit ? "Update User Profile" : "User Profile"}
@@ -111,13 +116,20 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ user: initialUser }
                     </div>
 
 {/* address */}
+{
+    !sellerRoleAuth &&
                     <div >
                         <AddressComponent />
                     </div>
+}
 {/* payment info  */}
+{
+    !sellerRoleAuth &&
+
 <div>
     <UserPaymentForm/>
 </div>
+}
                   
                 </div>
                 <div>

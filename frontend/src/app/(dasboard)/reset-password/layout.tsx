@@ -6,13 +6,15 @@ export const metadata: Metadata = {
   title: "Reset Password | SAADiCcollection.shop",
   description:
     "Securely reset your SAADiCcollection.shop account password to regain access to your profile and orders.",
-  keywords: [
-    "reset password",
-    "account recovery",
-    "password change",
-    "forgot password",
-    "SAADiCcollection.shop"
-  ],
+keywords: [
+  "reset password",
+  "account recovery",
+  "password change",
+  "forgot password",
+  "SAADiCcollection.shop",
+  "SaadiCollection"
+],
+
 };
 
 
