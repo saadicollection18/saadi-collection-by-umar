@@ -50,13 +50,17 @@ const Products = () => {
   }, [value, routePath, router]);
 
   const fetchProducts = async () => {
+    setLoading(true)
     try {
       const endpoint = sort ? `${API_URL}/${sort}` : `${API_URL}/get-products`;
       const response = await axios.get(endpoint);
       setProducts(response.data.data);
+      setLoading(false)
       setError(null);
     } catch (err: unknown) {
       if (err instanceof AxiosError) {
+      setLoading(false)
+
         setError(err.message || "An error occurred while fetching products.");
       }
     }
@@ -160,6 +164,7 @@ const Products = () => {
       }, 3000);
     }
   }, [favIdInParams]);
+    if(loading) return <Loading />
 
   return (
     <>
@@ -195,10 +200,9 @@ const Products = () => {
 
 
     <div className="px-6 py-10">
-      {loading && <Loading />}
 
       {searchedProducts && <h1 className="text-gray-600 font-semibold mb-6 text-lg">{searchResult} items found for &quot;{searchedProducts}&quot;</h1>}
-      {categoryName &&
+      { categoryName &&
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
@@ -222,7 +226,7 @@ const Products = () => {
         </div>
       }
 
-      {error ? (
+      {!loading && error ? (
         <ErrorMessage message={error} />
       ) : (
         <div className="flex flex-col gap-3">

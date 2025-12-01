@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import useAuth from "@/app/auths/auth";
 const BuyerNavbarComponent = () => {
-    const { user } = useAuth()
+    const { loading,user } = useAuth()
     const [sortOption, setSortOption] = useState("");
     const [isProductSearched, setIsProductSearched] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -283,6 +283,18 @@ const BuyerNavbarComponent = () => {
                                     <div className="hidden md:flex items-center space-x-4">
                                        
                                         {/* User Actions */}
+                                        {
+                                            loading
+                                            ?
+                                            <div className="flex items-center justify-center py-4">
+  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+  </svg>
+  <span className="ml-2 text-white">Loading</span>
+</div>
+
+                                            :
                                         <div className="relative">
                                             <button
                                                 className="flex items-center justify-center absolute right-2 top-3 text-gray-200 hover:text-white rounded-lg"
@@ -325,6 +337,7 @@ const BuyerNavbarComponent = () => {
                                                 <option value="contact">Contact Us</option>
                                             </select>
                                         </div>
+                                        }
 
 
 

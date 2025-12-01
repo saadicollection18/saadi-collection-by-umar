@@ -4,12 +4,14 @@ import React from 'react';
 const Loading = () => {
  
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-product-bg bg-cover select-none bg-opacity-100 flex justify-center items-center z-50">
-      <div className="flex flex-col justify-center items-center">
-        <div className="w-12 h-12 border-4 border-gray-300 border-t-gray-700 border-b-blue-500 rounded-full animate-spin"></div>
-        <p className="text-black text-lg mt-4">Loading...</p>
-      </div>
-    </div>
+<div className="fixed inset-0 bg-orange-50 flex justify-center items-center z-50 select-none">
+  <div className="flex flex-col justify-center items-center">
+    <div className="w-14 h-14 border-4 border-gray-300 border-t-cyan-500 rounded-full animate-spin"></div>
+    <p className="text-white text-lg mt-3 font-medium">Loading...</p>
+  </div>
+</div>
+
+
   );
 };
 
