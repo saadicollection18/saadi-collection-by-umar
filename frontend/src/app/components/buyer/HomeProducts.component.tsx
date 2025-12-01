@@ -12,6 +12,7 @@ import ErrorMessage from '../ErrorMessage.component';
 import Slider from '../Slider.component';
 import { useFetchData } from '@/app/utils/useFetchData';
 import Link from 'next/link';
+import Head from 'next/head';
 
 const Products = () => {
   const [sort, setSort] = useState<string | null>(null);
@@ -161,6 +162,38 @@ const Products = () => {
   }, [favIdInParams]);
 
   return (
+    <>
+  <Head>
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: products.map((p, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Product",
+            name: p.title,
+            image: p.image,
+            description: p.description,
+            brand: p.brand,
+            sku: p._id,
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "PKR",
+              price: p.price - p.discount,
+              availability: p.countInStock > 0 ? "InStock" : "OutOfStock"
+            }
+          }
+        }))
+      })
+    }}
+  />
+</Head>
+
+
     <div className="px-6 py-10">
       {loading && <Loading />}
 
@@ -370,6 +403,7 @@ const Products = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

@@ -380,6 +380,50 @@ const BuyerNavbarComponent = () => {
                             {/* Mobile Navigation */}
                             {isMenuOpen && (
                                 <div className="md:hidden relative flex flex-col gap-4   mt-4 p-3  rounded-lg shadow-lg">
+                                     {/* User Actions */}
+                                    <div className="relative">
+                                        <button
+                                            className="flex items-center justify-center absolute right-2 top-3 text-gray-200 hover:text-white rounded-lg"
+
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className={`h-4 w-4 transition-transform ${userActionOpen ? "rotate-180" : "rotate-0"}`}
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+
+                                        <select
+                                            id="userActions"
+                                            name="userActions"
+                                            value={user?.email?.split('@')[0]}
+                                            onChange={handleSitting}
+                                            onClick={() => setUserActionOpen((prev) => !prev)}
+                                            className="py-2 pl-3 pr-8 rounded-lg w-full bg-gray-800 border border-gray-700 text-white hover:border-cyan-400  focus:ring-2 focus:ring-cyan-500 focus:border-transparent cursor-pointer transition-all duration-200 appearance-none"
+                                        >
+                                            <option
+                                                className="text-gray-400"
+                                            >
+                                                {user ? user.email?.split('@')[0] : "Account"}
+                                            </option>
+                                            <option value="sign-up">Sign Up</option>
+                                            <option className={`${!user ? "hidden" : " bg-red-500"}`} value="log-out">
+                                                Log Out
+                                            </option>
+                                            <option className={`${!user ? "hidden" : ""}`} value="profile">
+                                                Profile
+                                            </option>
+                                            <option value="login">Login</option>
+                                            <option value="contact">Contact Us</option>
+                                        </select>
+                                    </div>
                                     <OrdersIconComponent />
 
                                     {
@@ -465,50 +509,7 @@ const BuyerNavbarComponent = () => {
                                         )}
                                     </div>
 
-                                    {/* User Actions */}
-                                    <div className="relative">
-                                        <button
-                                            className="flex items-center justify-center absolute right-2 top-3 text-gray-200 hover:text-white rounded-lg"
-
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className={`h-4 w-4 transition-transform ${userActionOpen ? "rotate-180" : "rotate-0"}`}
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                        </button>
-
-                                        <select
-                                            id="userActions"
-                                            name="userActions"
-                                            value={user?.email?.split('@')[0]}
-                                            onChange={handleSitting}
-                                            onClick={() => setUserActionOpen((prev) => !prev)}
-                                            className="py-2 pl-3 pr-8 rounded-lg w-full bg-gray-800 border border-gray-700 text-white hover:border-cyan-400  focus:ring-2 focus:ring-cyan-500 focus:border-transparent cursor-pointer transition-all duration-200 appearance-none"
-                                        >
-                                            <option
-                                                className="text-gray-400"
-                                            >
-                                                {user ? user.email?.split('@')[0] : "Account"}
-                                            </option>
-                                            <option value="sign-up">Sign Up</option>
-                                            <option className={`${!user ? "hidden" : " bg-red-500"}`} value="log-out">
-                                                Log Out
-                                            </option>
-                                            <option className={`${!user ? "hidden" : ""}`} value="profile">
-                                                Profile
-                                            </option>
-                                            <option value="login">Login</option>
-                                            <option value="contact">Contact Us</option>
-                                        </select>
-                                    </div>
+                                  
 
                                     {/* Search Section */}
                                     <div className="relative">
