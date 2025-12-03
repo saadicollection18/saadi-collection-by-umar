@@ -63,7 +63,7 @@ const CategoryComponent = () => {
                             <div
                                 key={cat._id}
                                 className="px-4 py-3  hover:bg-gray-800/60 cursor-pointer transition-all duration-200 group"
-                                onClick={() => router.push(`/?category=${encodeURIComponent(cat.categoryName)}`)}
+                                onClick={() => router.push(`/?category=${encodeURIComponent(cat.categoryName)}#products`)}
                             >
                                 <div className="flex items-center ">
                                     

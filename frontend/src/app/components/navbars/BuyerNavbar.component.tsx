@@ -169,12 +169,12 @@ const BuyerNavbarComponent = () => {
                                 </div>
                                 {/* Desktop Navigation */}
                                 <div className="hidden md:flex items-center flex-wrap justify-between space-x-2 space-y-2 md:space-y-0">
-                                    <button
+                                    {/* <button
                                         onClick={() => router.push('/request-store')}
                                         className="text-sm font-medium hover:text-blue-400"
                                     >
                                         Sell Now
-                                    </button>
+                                    </button> */}
 
 
                                     {

@@ -19,13 +19,16 @@ try {
         if (!isExitProduct) {
             throw new ApiError(401,'product not Founded!')
         }
-        const isExistProductInFav=await Favorite.find({item:isExitProduct._id})
-        console.log('isExistProductInFav',isExistProductInFav)
-        if (isExistProductInFav.length !==0) {
-            
-       return res.status(409).json(new ApiResponse(409,isExistProductInFav, "Favorite already exists for this user."))
-            
-        }
+    const isExistProductInFav = await Favorite.findOne({
+  user: req.user._id,
+  item: isExitProduct._id
+});
+
+if (isExistProductInFav) {
+  return res.status(409).json(
+    new ApiResponse(409, isExistProductInFav, "Favorite already exists for this user.")
+  );
+}
         const addToFav=await Favorite.create({user:user._id,item:isExitProduct._id})
     
         res.status(200).json(new ApiResponse(200,addToFav))

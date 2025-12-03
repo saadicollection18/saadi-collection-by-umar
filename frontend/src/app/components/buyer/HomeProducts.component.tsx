@@ -17,13 +17,14 @@ import Head from 'next/head';
 const Products = () => {
   const [sort, setSort] = useState<string | null>(null);
   const [products, setProducts] = useState<ProductInterface[]>([]);
-  const [searchResult, setSearchResult] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [searchResult, setSearchResult] = useState(0);
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<{ product: string; rating: number }[]>([]);
   const [showAddTocart, setShowAddTocart] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [favProductsIds, setFavProductsIds] = useState<string[]>([]);
+  const [favLoading,setFavLoading]=useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
 
   const router = useRouter();
@@ -49,18 +50,19 @@ const Products = () => {
     } else setSort(null);
   }, [value, routePath, router]);
 
-  const fetchProducts = async () => {
-    setLoading(true)
+  const fetchProducts = async (ignoreLoading=false) => {
+  if (ignoreLoading) setLoading(true)
     try {
       const endpoint = sort ? `${API_URL}/${sort}` : `${API_URL}/get-products`;
       const response = await axios.get(endpoint);
       setProducts(response.data.data);
-      setLoading(false)
+          if (ignoreLoading) setLoading(false); 
+
       setError(null);
     } catch (err: unknown) {
+      if (ignoreLoading) setLoading(false); 
       if (err instanceof AxiosError) {
-      setLoading(false)
-
+        
         setError(err.message || "An error occurred while fetching products.");
       }
     }
@@ -81,7 +83,7 @@ const Products = () => {
     if (searchedProducts) {
       fetchSearchedProducts();
     }
-    if (!searchedProducts && !categoryName) fetchProducts();
+    if (!searchedProducts && !categoryName) fetchProducts(true);
   }, [API_URL, sort, searchedProducts, categoryName]);
 
   const fetchAllReviews = async () => {
@@ -103,6 +105,7 @@ const Products = () => {
       const productIds = res.data.data
         .map((fav: FavInterface) => fav.item?._id)
         .filter((id: string): id is string => Boolean(id));
+       
       setFavProductsIds(productIds);
     } catch { }
   };
@@ -115,8 +118,9 @@ const Products = () => {
     if (!categoryName) return;
     try {
       setError(null);
-      const res = await axios.post(`${API_URL}/find-Category-Products?category=${encodeURIComponent(categoryName)}`);
+      const res = await axios.get(`${API_URL}/find-Category-Products?category=${encodeURIComponent(categoryName)}`);
       setProducts(res.data.data);
+
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         setError(error.response?.data.error || "An error occurred while fetching products.");
@@ -136,19 +140,25 @@ const Products = () => {
   };
 
   const addToFavHandler = async (productId: string) => {
+      setFavLoading(true)
+
     try {
       await axios.post(`${API_URL}/add-to-fav/${productId}`, {}, { withCredentials: true });
       if (favIdInParams) alert('✅ Product added to favorite successfully');
-      fetchProducts();
+      setFavLoading(false)
+      fetchProducts(false);
       getFavProducts();
     } catch (error: unknown) {
+      setFavLoading(false)
       if (error instanceof AxiosError && error.response?.status === 401) {
+
         router.push(`/login?favId=${productId}`);
       }
     }
   };
 
   const removeFavHandler = async (productId: string) => {
+    
     try {
       await axios.delete(`${API_URL}/remove-fav/${productId}`, { withCredentials: true });
       getFavProducts();
@@ -168,7 +178,7 @@ const Products = () => {
 
   return (
     <>
-  <Head>
+ <Head>
   <script
     type="application/ld+json"
     dangerouslySetInnerHTML={{
@@ -196,7 +206,14 @@ const Products = () => {
       })
     }}
   />
+
+  <meta property="og:title" content="Saadi Collection" />
+  <meta property="og:description" content="Premium products at good prices." />
+  <meta property="og:image" content={products[0]?.image} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://saadicollection.shop" />
 </Head>
+
 
 
     <div className="px-6 py-10">
@@ -209,6 +226,7 @@ const Products = () => {
               <h1 className="text-2xl font-bold text-gray-900 mb-1">
                 Items found in <span className="text-blue-600">&quot;{categoryName}&quot;</span>
               </h1>
+             
               <p className="text-gray-500 text-sm">
                 Discover our curated collection of {categoryName} products
               </p>
@@ -229,7 +247,7 @@ const Products = () => {
       {!loading && error ? (
         <ErrorMessage message={error} />
       ) : (
-        <div className="flex flex-col gap-3">
+        <div id='products' className="flex flex-col gap-3">
           <Slider />
           <hr className="h-px bg-gray-200 border-0 my-6" />
 
@@ -242,7 +260,7 @@ const Products = () => {
             </div>
           )}
 
-          <div className="grid bg-transparent grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div  className="grid bg-transparent grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product: ProductInterface) => {
               const productId = product._id;
               const averageRating = parseFloat(getAverageRating(productId));
@@ -250,7 +268,7 @@ const Products = () => {
               const hasDiscount = product.discount && product.discount > 0;
 
               return (
-                <div key={product._id} className="group relative bg-transparent rounded-xl border border-gray-100 shadow-sm overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-gray-200">
+                <div  key={product._id} className="group relative bg-transparent rounded-xl border border-gray-100 shadow-sm overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg hover:border-gray-200">
                   {isOutOfStock && (
                     <div
                       className="absolute top-4 right-4 bg-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10"
@@ -370,7 +388,10 @@ const Products = () => {
                           </svg>
                         </button>
                       ) : (
-                        <button onClick={() => addToFavHandler(product._id)} className="text-red-500 w-36 hover:text-red-700">
+                        <button
+                        disabled={favLoading}
+                         onClick={() => addToFavHandler(product._id)} 
+                        className={`${favLoading?"cursor-not-allowed":"cursor-pointer"} text-red-500 w-36 hover:text-red-700`}>
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
                             <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                           </svg>

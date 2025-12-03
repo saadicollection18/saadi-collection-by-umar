@@ -1,87 +1,95 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
+import { ProductInterface } from '../utils/productsInterface'
+import axios from 'axios'
 
-interface Slide {
-  image: string
-  text: string
-  category?:string
-  shop:boolean
-}
-
-const slides: Slide[] = [
-  {
-    image: '/shirts-stock.jpg',
-    text: 'Premium fashion, made for everyday comfort',
-    category:'Fashion',
-    shop:true
-  },
-  {
-    image: '/shoes-stock.jpg',
-    text: 'Step into quality. Every pair tells your story.',
-    category:'Shoes Men',
-    
-    shop:true
-  },
-  {
-    image: '/cosmetic-stock.jpg',
-    text: 'Complete your look with elegance and detail.',
-    category:'Beauty & Skincare',
-    shop:true
-  },
-  {
-    image: '/delivery-scene.jpg',
-    text: 'Fast delivery across Pakistan. Cash on delivery available.',
-    shop:false
-
-  },
-]
 
 const Slider: React.FC = () => {
   const [index, setIndex] = useState(0)
+  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+   
+  
+
+
+
+    const categoryBaseProducts = async () => {
+      
+      try {
+        const res = await axios.get(`${API_URL}/categories-with-product`);
+        const data=res.data.data
+      
+        setProducts(data);
+      } catch  {
+        alert('somthing went wrong while fetching categories products ')
+      }
+    };
+
+useEffect(()=>{
+categoryBaseProducts()
+},[])
+
 const router=useRouter()
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length)
+      setIndex((prev) => (prev + 1) % products.length)
     }, 4000)
     return () => clearInterval(timer)
-  }, [])
+  }, [ [products.length]])
 
-  const next = () => setIndex((prev) => (prev + 1) % slides.length)
-  const prev = () => setIndex((prev) => (prev - 1 + slides.length) % slides.length)
+  const next = () => setIndex((prev) => (prev + 1) % products.length)
+  const prev = () => setIndex((prev) => (prev - 1 + products.length) % products.length)
 
   return (
-    <div className="relative w-full h-[70vh] max-h-[600px] overflow-hidden rounded-2xl">
+    <div className="relative w-full  h-[70vh] max-h-[600px] overflow-hidden rounded-2xl">
       {/* Slides */}
       <div
         className="flex transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
-        {slides.map((slide, i) => (
-          <div
-            key={i}
-            className="min-w-full h-[70vh] relative flex items-center justify-center"
-          >
+        {products.map((slide, i) =>{ 
+         
+       return (
+         <div
+  key={i}
+  className="min-w-full h-[70vh] relative flex items-center justify-center "
+  style={{ backgroundImage: `url(${slide.image})` }}
+>
             <img
               src={slide.image}
               alt={`Slide ${i + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-center px-6">
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center gap-3 text-center px-6">
               <h2 className="text-2xl md:text-4xl font-semibold text-white mb-4">
-                {slide.text}
-              </h2>
-              {slide.shop &&
+                {slide.title}
+              </h2>     
+
+                  <button
+              onClick={()=>{
+                      router.push(`/?category=${slide.category.categoryName }#products`)
+
+              }}
+               className="bg-white text-gray-900 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
+               category: {slide.category.categoryName}
+              </button>   
+            
               <button
               onClick={()=>{
-                router.push(`?category=${slide.category}`)
+                      router.push(`/buyer/order?query=${btoa(JSON.stringify({ productId:slide._id }))}`)
+
               }}
                className="bg-white text-gray-900 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
                 Shop Now
-              </button>}
+              </button>
+             
+          
             </div>
           </div>
-        ))}
+        )
+        }
+        )}
       </div>
 
       {/* Navigation */}
@@ -100,7 +108,7 @@ const router=useRouter()
 
       {/* Dots */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
-        {slides.map((_, i) => (
+        {products.map((_, i) => (
           <span
             key={i}
             onClick={() => setIndex(i)}
