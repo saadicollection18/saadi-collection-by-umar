@@ -26,28 +26,28 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ user: initialUser }
 
     return (
         <>
-            <div className=" mx-auto h-screen  bg-transparent shadow-xl rounded-xl overflow-hidden relative w-full">
+            <div className="   bg-transparent shadow-xl rounded-xl overflow-hidden relative w-full">
                 <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
                     <h1 className="text-2xl font-bold text-white">
                         {edit ? "Update User Profile" : "User Profile"}
                     </h1>
                 </div>
 
-                <div className="p-6 flex justify-evenly items-baseline  flex-wrap   h-auto ">
+                <div className="p-6 flex flex-wrap justify-evenly items-baseline  h-auto ">
                     {user ? (
-                        <div className={edit ? "hidden" : "space-y-6"}>
-                            <div className="grid  grid-cols-1 gap-4">
+                        <div className={edit ? "hidden" : "space-y-6   w-full"}>
+                            <div className="grid  grid-cols-1 overflow-x-scroll md:overflow-hidden gap-4 ">
                                 {/* User Information Items */}
                                 {[
                                     { label: "Username", value: user.username },
                                     { label: "Email", value: user.email },
                                     { label: "Phone", value: user.phone },
                                 ].map((item, index) => (
-                                    <div key={index} className="flex items-center py-3 border-b border-gray-100">
+                                    <div key={index} className="flex flex-wrap w-full  items-center py-3 border-b border-gray-100">
                                         <span className="font-medium text-gray-600 w-40 flex-shrink-0">
                                             {item.label}:
                                         </span>
-                                        <span className="text-gray-800 truncate">
+                                        <span className="text-gray-800 ">
                                             {item.value || "N/A"}
                                         </span>
                                     </div>
